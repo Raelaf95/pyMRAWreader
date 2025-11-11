@@ -122,7 +122,7 @@ class pyMRAWreader:
                         self.__check_bitOrder__()
                         print(f'Settign Bit Order automatically to {self.BitOrder}')
 
-        if self.BitSize == 12:  ### if I need to split 3 8bits bytes into 2 12 bit bytes
+        elif self.BitSize == 12:  ### if I need to split 3 8bits bytes into 2 12 bit bytes
             Frame = np.zeros(self.Width * self.Height, np.dtype('uint16'))
 
             with open(self.mraw_path, mode='rb') as file:  # b is important -> binary
@@ -150,5 +150,7 @@ class pyMRAWreader:
 
                     Frame[i] = first  # int.from_bytes(first, byteorder='little', signed=False)
                     Frame[i + 1] = second  # int.from_bytes(second, byteorder='little', signed=False)
+        else:
+            return -1
 
         return Frame.reshape((self.Height, self.Width))
